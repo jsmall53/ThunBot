@@ -1,0 +1,2 @@
+Pyramid counter for successful pyramids
+	-how do I tell if its successful or not?
