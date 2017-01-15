@@ -1,0 +1,2 @@
+# ThunBot
+Twitch chat bot
