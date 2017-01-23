@@ -5,7 +5,7 @@ HOST = "irc.twitch.tv"  #twitch IRC server
 PORT = 6667
 NICK = "thunbot_" #name of the bot
 PASS = "oauth:zq951d4x3w1vdu9mzf8hc3a730ily1"#"oauth:xxi5yk7t1ul1q3wptdklgvrrdf4qls" #password to bot account
-CHAN = "#etup" #the channel you want to join
+CHAN = "#bigsmcgee" #the channel you want to join
 #RATE =  (20/30)         #chat spam limit
 
 THUNBEAST = "ThunBeast"
@@ -29,7 +29,7 @@ GUESS_COOLDOWN = 5
 COMMAND_PYRAMID = "!pyramid"
 COMMAND_GUESS   = "!guess"
 COMMAND_TEST    = "!test"
-COMMAND_RAMRANCH = "!ramranch"
+COMMAND_THINKING = "!hmmm"
 
 #MISC CONSTANTS
 GUESS_WINRATE = 15 #represents the max number of possible "retries" for the guess command

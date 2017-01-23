@@ -113,6 +113,9 @@ while True:
             else:
                 chat(messageTok[1] + ' is not a recognized emote')
             guessTimer = time.time()
+        
+        #elif cfg.COMMAND_THINKING in messageTok:
+        #    chat(" :thinking: ")
 
         #MAKE SURE THIS IS AT THE END OF THE SEQUENCE   
         elif (cfg.THUNBEAST in messageTok) and (time.time() - replyTimer >= cfg.REPLY_COOLDOWN):
