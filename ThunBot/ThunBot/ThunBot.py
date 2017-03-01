@@ -11,6 +11,7 @@ CHAT_MSG = re.compile(r"^:\w+!\w+@\w+\.tmi\.twitch\.tv PRIVMSG #\w+ :")
 
 ThunBeast = "ThunBeast"
 meThunBeast = "/me ThunBeast"
+ignoredUser = "" #just for initialization
 #network functions
 #s = socket.socket()
 #s.connect((cfg.HOST, cfg.PORT))
@@ -25,6 +26,8 @@ replyTimer = 0
 guessTimer = 0
 pyramidTimer = 0 #try starting at 0 for both of these
 meToggle = 0
+ignoreTimer = 0
+isUserIgnored = False
 
 #instantiate our emote class
 emotes = Emotes()
@@ -77,11 +80,28 @@ while True:
         
         messageTok = message.rsplit() #splits off newline characters as well
 
+        if ((isUserIgnored == True) and ((time.time() - ignoreTimer) >= cfg.IGNORE_COOLDOWN)):
+            chat(Commands.Unignore())
+            isUserIgnored = False
+        
+        if ((username == ignoredUser) and isUserIgnored):
+            continue
+
         #if re.search("ThunBeast__", message) or re.search("ThunBeast__,", message) and (time.time() - timer >= 5):
         if ((cfg.BOTNAME[0] in messageTok) or (cfg.BOTNAME[1] in messageTok)) and (time.time() - replyTimer >= cfg.REPLY_COOLDOWN):
             #s.send("PRIVMSG {} :{} ThunBeast\r\n".format(cfg.CHAN, username).encode("utf-8"))
             chat(username + " " + ThunBeast)
             replyTimer = time.time()
+
+#        elif (cfg.COMMAND_IGNORE in messageTok):
+#            if ((time.time() - ignoreTimer) >= cfg.IGNORE_COOLDOWN):
+#                if (isUserIgnored == True):
+#                    chat(Commands.Unignore())
+#                ignoredUser = messageTok[1]
+#                chat(Commands.Ignore(ignoredUser))
+#                chat(ignoredUser + " was successfully ignored")
+#                isUserIgnored = True   
+#                ignoreTimer = time.time()
 
         #elif re.search("!pyramid", message) and (time.time() - pyramidTimer >= cfg.PYRAMID_COOLDOWN):
         elif (cfg.COMMAND_PYRAMID in messageTok) and (time.time() - pyramidTimer >= cfg.PYRAMID_COOLDOWN):
@@ -114,8 +134,8 @@ while True:
                 chat(messageTok[1] + ' is not a recognized emote')
             guessTimer = time.time()
         
-        #elif cfg.COMMAND_THINKING in messageTok:
-        #    chat(" :thinking: ")
+        elif cfg.COMMAND_THINKING in messageTok:
+            chat("🤔")
 
         #MAKE SURE THIS IS AT THE END OF THE SEQUENCE   
         elif (cfg.THUNBEAST in messageTok) and (time.time() - replyTimer >= cfg.REPLY_COOLDOWN):

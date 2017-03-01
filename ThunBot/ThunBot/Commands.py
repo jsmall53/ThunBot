@@ -4,6 +4,7 @@ import cfg
 import random
 import math
 
+ignoredUser = ""
 #random.seed()
 #first is the guess command, since this is the most popular it seems
 def ThunGuess(emote, emotesRef):
@@ -31,3 +32,13 @@ def GuessWin():
     winFile.truncate()
     winFile.close()
     return winCounter
+
+def Ignore(user):
+    '''Returns something about ignoring a user'''
+    ignoredUser = user
+    return ("/ignore " + ignoredUser)
+
+def Unignore():
+    '''Ungnores the previously ignored user'''
+    return ("/unignore " + ignoredUser)
+    
