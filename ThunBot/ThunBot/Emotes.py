@@ -2,6 +2,7 @@
 
 import cfg
 import random
+import DBInterface
 
 class Emotes:
     '''This class stores emotes usable through twitch.tv chat interface'''
@@ -30,4 +31,7 @@ class Emotes:
         length = len(self.emoteList)
         index = random.randrange(length)
         return self.emoteList[index]
+        
+    def GetEmoteList():
+        '''Reads the emote list into memory'''
         

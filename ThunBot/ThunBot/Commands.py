@@ -5,21 +5,19 @@ import random
 import math
 import DBInterface
 
-ignoredUser = ""
-#random.seed()
+random.seed()
 #first is the guess command, since this is the most popular it seems
-def ThunGuess(emote, emotesRef):
+def ThunGuess(username, emote, emotesRef):
     '''Takes in an emote as a string and returns an emote string'''
-    random.seed()
+    #random.seed()
     #diceRollReference = random.randrange(cfg.GUESS_WINRATE)
     #diceRollReference = math.floor(cfg.GUESS_WINRATE/2)
     diceRoll = random.randrange(1, cfg.GUESS_WINRATE)
     for i in range(1, cfg.GUESS_WINRATE):
         emoteRoll = emotesRef.RandEmote()
         if emoteRoll  == emote: #if we have grabbed the winning emote
-            #TODO: INCREMENT TOTAL WIN COUNTER
-            #TODO: IF USER EXISTS IN GUESSWINS, INCREMENT COUNTER
-            #       OTHERWISE ADD A NEW ENTRY
+            DBInterface.UpdateTotalWins()
+            DBInterface.UpdateUserWins(username)
             return emoteRoll #then the user wins so we return the input emote
         #else: #we want to return a random emote
     return emoteRoll

@@ -77,6 +77,7 @@ while True:
         except:
             message = ""
             print(username + ":")
+            continue
         
         messageTok = message.rsplit() #splits off newline characters as well
 
@@ -88,12 +89,11 @@ while True:
                 continue
 
             if (emotes.findEmote(guessedEmote)):
-                winningEmote = Commands.ThunGuess(guessedEmote, emotes)
+                winningEmote = Commands.ThunGuess(username, guessedEmote, emotes)
                 if winningEmote == guessedEmote:
-                    winCounter = Commands.GuessWin()
-                    chat(username + ' is correct! I guessed ' + guessedEmote + ' ' + username + ' is winner #' + str(winCounter))
+                    chat(username + ' is correct! I guessed ' + guessedEmote)
                 else:
-                    chat(username + ' is wrong :( My guess was ' + winningEmote)
+                    chat(username + ' is wrong. My guess was ' + winningEmote)
             else:
                 chat(messageTok[1] + ' is not a recognized emote')
             guessTimer = time.time()
@@ -106,14 +106,17 @@ while True:
         
         elif (cfg.COMMAND_GUESSWINS == messageTok[0]):
             totalGuessWins = Commands.TotalGuessWins()
-            chat('%i Wins!' %(totalGuessWins))
+            chat('There has been %i correct guesses!' %(totalGuessWins))
 
-        elif (cfg.COMMAND_TESTWINS == messageTok[0]):
-            testTotalGuessWins = Commands.TestTotalGuessWins()
-            chat('%i Wins!' %(testTotalGuessWins))
-        elif (cfg.COMMAND_TESTUSERWINS == messageTok[0]):
-            testTotalUserGuessWins = Commands.TestUpdateUserGuessWins(username)
-            chat("%s has won %i times"%(username, testTotalUserGuessWins))
+#        elif (cfg.COMMAND_TESTWINS == messageTok[0]):
+#            testTotalGuessWins = Commands.TestTotalGuessWins()
+#            chat('%i Wins!' %(testTotalGuessWins))
+#        elif (cfg.COMMAND_TESTUSERWINS == messageTok[0]):
+#            testTotalUserGuessWins = Commands.TestUpdateUserGuessWins(username)
+#            chat("%s has won %i times"%(username, testTotalUserGuessWins))
+        elif (cfg.COMMAND_MYWINS == messageTok[0]):
+            mywins = Commands.GuessWins(username)
+            chat("%s has guessed correctly %i times"%(username, mywins))
 
         elif (cfg.COMMAND_PYRAMID == messageTok[0]) and (time.time() - pyramidTimer >= cfg.PYRAMID_COOLDOWN):
             pyramidTimer = time.time()

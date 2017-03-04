@@ -32,9 +32,6 @@ def GuessWinsQuery(username):
 
     return int(numWins)
     
-def CheckUser(username):
-    '''checks if the user is in the GuessWins table'''
-
 def TotalGuessWinsQuery():
     '''Executes a query for the total number of guess wins'''
     cursor.execute("""
@@ -52,16 +49,21 @@ def UpdateTotalWins():
     cursor.commit()
 
 def UpdateUserWins(username):
-    '''Increments the personal win counter for a specified user'''
+    '''Increments the personal win counter for a specified user if the user exists, if user doesnt exist it creates an entry with 1 win'''
     username = _formatUsernameForQuery(username)
-    cursor.execute("update GuessWins set NumWins=NumWins+1 where UserName={}".format(username))
+    #cursor.execute("update GuessWins set NumWins=NumWins+1 where UserName={}".format(username))
+    cursor.execute("""if not exists(select * from GuessWins where UserName = {}) 
+                    BEGIN
+                        insert into GuessWins(UserName, NumWins) VALUES({}, 1)
+                    END
+                    ELSE
+                    BEGIN  
+                        UPDATE GuessWins
+                        set NumWins = NumWins + 1
+                        where UserName = {}
+                    END                                                     """.format(username, username, username))
     cursor.commit()
-#cursor.execute("""
-#                select UserName, NumWins
-#                    from GuessWins
-#                where UserName = {}
-#                """.format(username))
-#rows = cursor.fetchall()
-#for row in rows:
-#    print('%s has %i wins' %(row.UserName, row.NumWins))
-#    row = cursor.fetchone()
+
+def GetEmoteList():
+    '''Reads the emotes table into memory'''
+    
