@@ -3,6 +3,7 @@ from Emotes import Emotes
 import cfg
 import random
 import math
+import DBInterface
 
 ignoredUser = ""
 #random.seed()
@@ -15,9 +16,12 @@ def ThunGuess(emote, emotesRef):
     diceRoll = random.randrange(1, cfg.GUESS_WINRATE)
     for i in range(1, cfg.GUESS_WINRATE):
         emoteRoll = emotesRef.RandEmote()
-        if emoteRoll  == emote:
+        if emoteRoll  == emote: #if we have grabbed the winning emote
+            #TODO: INCREMENT TOTAL WIN COUNTER
+            #TODO: IF USER EXISTS IN GUESSWINS, INCREMENT COUNTER
+            #       OTHERWISE ADD A NEW ENTRY
             return emoteRoll #then the user wins so we return the input emote
-        #else: #we want to return a random emote(still has a chance to win
+        #else: #we want to return a random emote
     return emoteRoll
 
 def GuessWin():
@@ -33,12 +37,17 @@ def GuessWin():
     winFile.close()
     return winCounter
 
-def Ignore(user):
-    '''Returns something about ignoring a user'''
-    ignoredUser = user
-    return ("/ignore " + ignoredUser)
+def GuessWins(username):
+    numWins = DBInterface.GuessWinsQuery(username)
+    return numWins
 
-def Unignore():
-    '''Ungnores the previously ignored user'''
-    return ("/unignore " + ignoredUser)
-    
+def TotalGuessWins():
+    return DBInterface.TotalGuessWinsQuery()
+
+def TestTotalGuessWins():
+    DBInterface.UpdateTotalWins()
+    return TotalGuessWins()
+
+def TestUpdateUserGuessWins(username):
+    DBInterface.UpdateUserWins(username)
+    return GuessWins(username)

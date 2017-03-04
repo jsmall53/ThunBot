@@ -80,31 +80,42 @@ while True:
         
         messageTok = message.rsplit() #splits off newline characters as well
 
-        if ((isUserIgnored == True) and ((time.time() - ignoreTimer) >= cfg.IGNORE_COOLDOWN)):
-            chat(Commands.Unignore())
-            isUserIgnored = False
-        
-        if ((username == ignoredUser) and isUserIgnored):
+        if (cfg.COMMAND_GUESS == messageTok[0] and (time.time() - guessTimer >= cfg.GUESS_COOLDOWN)):
+            try:
+                guessedEmote = messageTok[1] #need to not hard code this positioning
+            except:
+                guessedEmote = ""
+                continue
+
+            if (emotes.findEmote(guessedEmote)):
+                winningEmote = Commands.ThunGuess(guessedEmote, emotes)
+                if winningEmote == guessedEmote:
+                    winCounter = Commands.GuessWin()
+                    chat(username + ' is correct! I guessed ' + guessedEmote + ' ' + username + ' is winner #' + str(winCounter))
+                else:
+                    chat(username + ' is wrong :( My guess was ' + winningEmote)
+            else:
+                chat(messageTok[1] + ' is not a recognized emote')
+            guessTimer = time.time()
             continue
 
-        #if re.search("ThunBeast__", message) or re.search("ThunBeast__,", message) and (time.time() - timer >= 5):
-        if ((cfg.BOTNAME[0] in messageTok) or (cfg.BOTNAME[1] in messageTok)) and (time.time() - replyTimer >= cfg.REPLY_COOLDOWN):
-            #s.send("PRIVMSG {} :{} ThunBeast\r\n".format(cfg.CHAN, username).encode("utf-8"))
+        elif ((cfg.BOTNAME[0] in messageTok) or (cfg.BOTNAME[1] in messageTok)) and (time.time() - replyTimer >= cfg.REPLY_COOLDOWN):
             chat(username + " " + ThunBeast)
             replyTimer = time.time()
+        
+        
+        elif (cfg.COMMAND_GUESSWINS == messageTok[0]):
+            totalGuessWins = Commands.TotalGuessWins()
+            chat('%i Wins!' %(totalGuessWins))
 
-#        elif (cfg.COMMAND_IGNORE in messageTok):
-#            if ((time.time() - ignoreTimer) >= cfg.IGNORE_COOLDOWN):
-#                if (isUserIgnored == True):
-#                    chat(Commands.Unignore())
-#                ignoredUser = messageTok[1]
-#                chat(Commands.Ignore(ignoredUser))
-#                chat(ignoredUser + " was successfully ignored")
-#                isUserIgnored = True   
-#                ignoreTimer = time.time()
+        elif (cfg.COMMAND_TESTWINS == messageTok[0]):
+            testTotalGuessWins = Commands.TestTotalGuessWins()
+            chat('%i Wins!' %(testTotalGuessWins))
+        elif (cfg.COMMAND_TESTUSERWINS == messageTok[0]):
+            testTotalUserGuessWins = Commands.TestUpdateUserGuessWins(username)
+            chat("%s has won %i times"%(username, testTotalUserGuessWins))
 
-        #elif re.search("!pyramid", message) and (time.time() - pyramidTimer >= cfg.PYRAMID_COOLDOWN):
-        elif (cfg.COMMAND_PYRAMID in messageTok) and (time.time() - pyramidTimer >= cfg.PYRAMID_COOLDOWN):
+        elif (cfg.COMMAND_PYRAMID == messageTok[0]) and (time.time() - pyramidTimer >= cfg.PYRAMID_COOLDOWN):
             pyramidTimer = time.time()
             chat(ThunBeast)
             time.sleep(1.25)
@@ -117,25 +128,10 @@ while True:
             chat(ThunBeast)
             pyramidTimer = time.time()
 
-        #elif re.search("!guess", message):
-        elif cfg.COMMAND_GUESS in messageTok and (time.time() - guessTimer >= cfg.GUESS_COOLDOWN):
-            guessedEmote = messageTok[1] #need to not hard code this positioning
-            
-            if (emotes.findEmote(guessedEmote)):
-                winningEmote = Commands.ThunGuess(guessedEmote, emotes)
-#                randEmote = emotes.RandEmote()
-#                if randEmote == messageTok[1]:
-                if winningEmote == guessedEmote:
-                    winCounter = Commands.GuessWin()
-                    chat(username + ' is correct! I guessed ' + guessedEmote + ' ' + username + ' is winner #' + str(winCounter))
-                else:
-                    chat(username + ' is wrong :( My guess was ' + winningEmote)
-            else:
-                chat(messageTok[1] + ' is not a recognized emote')
-            guessTimer = time.time()
         
-        elif cfg.COMMAND_THINKING in messageTok:
-            chat("🤔")
+        
+        elif cfg.COMMAND_THINKING == messageTok[0]:
+            chat("🤔") #:thinking: emoji
 
         #MAKE SURE THIS IS AT THE END OF THE SEQUENCE   
         elif (cfg.THUNBEAST in messageTok) and (time.time() - replyTimer >= cfg.REPLY_COOLDOWN):

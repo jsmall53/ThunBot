@@ -31,7 +31,7 @@
     <Compile Include="Commands.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="PyramidTracker.py">
+    <Compile Include="DBInterface.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ThunBot.py" />
