@@ -108,12 +108,6 @@ while True:
             totalGuessWins = Commands.TotalGuessWins()
             chat('There has been %i correct guesses!' %(totalGuessWins))
 
-#        elif (cfg.COMMAND_TESTWINS == messageTok[0]):
-#            testTotalGuessWins = Commands.TestTotalGuessWins()
-#            chat('%i Wins!' %(testTotalGuessWins))
-#        elif (cfg.COMMAND_TESTUSERWINS == messageTok[0]):
-#            testTotalUserGuessWins = Commands.TestUpdateUserGuessWins(username)
-#            chat("%s has won %i times"%(username, testTotalUserGuessWins))
         elif(cfg.COMMAND_REGISTER == messageTok[0] and username == 'bigsmcgee'):
             emote = messageTok[1]
             Commands.RegisterUniversalEmote(emote)

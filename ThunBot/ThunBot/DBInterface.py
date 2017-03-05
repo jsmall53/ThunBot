@@ -1,6 +1,7 @@
 '''Handles SQL interfacing'''
-#NOTES:::   don't want to store people with 0 wins, only add to DB if they ahve at least 1 win.
-#           this means that if the guess is a winner, I should increment the users NumWins by 1 if they already exist, and create a new entry if they dont exist yet.
+
+#TODO: add a way to import all bttv emotes at once instead of spamming the command to get a channel setup initially. use https://api.betterttv.net/2/channels/<channel>. (E.G. https://api.betterttv.net/2/channels/etup has all of the bttv emotes registered with etups channel)
+
 import pyodbc
 
 server = 'JORDAN-PC\THUNBOTSQL'
