@@ -1,6 +1,5 @@
 #This class will store emotes as well has contain methods for choosing and comparing emotes
 
-import cfg
 import random
 import DBInterface
 
@@ -13,11 +12,10 @@ class Emotes:
     emoteList = [] #create a list that we can dynamically allocate based on the number of emotes in the file
     #file = open(cfg.fileName)
 
-    def Init(self, fileName):
+    def Init(self, channel):
         '''Sets up the list of emotes given in the file'''
-        file = open(fileName, 'r')
-        for line in file:
-            self.emoteList.append(line.rstrip())
+        DBInterface.GetEmoteList(self.emoteList)
+        DBInterface.GetChannelSpecificEmotes(self.emoteList, channel)
 
     def findEmote(self, emoteString):
         '''returns the emote if it is located in the file'''
@@ -32,6 +30,7 @@ class Emotes:
         index = random.randrange(length)
         return self.emoteList[index]
         
-    def GetEmoteList():
-        '''Reads the emote list into memory'''
-        
+    def RefreshEmoteList(self, channel):
+        '''Refreshes the active emote list by deleting and regrabbing'''
+        self.emoteList.clear()
+        self.Init(channel)

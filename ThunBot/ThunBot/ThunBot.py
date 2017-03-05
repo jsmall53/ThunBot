@@ -57,7 +57,7 @@ s.send("JOIN {}\r\n".format(cfg.CHAN).encode("utf-8"))
 
 chat(ThunBeast + " /")
 
-emotes.Init(cfg.fileName)
+emotes.Init(cfg.channel)
 
 #main loop
 while True:
@@ -114,6 +114,30 @@ while True:
 #        elif (cfg.COMMAND_TESTUSERWINS == messageTok[0]):
 #            testTotalUserGuessWins = Commands.TestUpdateUserGuessWins(username)
 #            chat("%s has won %i times"%(username, testTotalUserGuessWins))
+        elif(cfg.COMMAND_REGISTER == messageTok[0] and username == 'bigsmcgee'):
+            emote = messageTok[1]
+            Commands.RegisterUniversalEmote(emote)
+            emotes.RefreshEmoteList(cfg.channel)
+            chat('Added %s to the emote list'%(emote))
+
+        elif(cfg.COMMAND_UNREGISTER == messageTok[0] and username == 'bigsmcgee'):
+            emote = messageTok[1]
+            Commands.UnregisterUniversalEmote(emote)
+            emotes.RefreshEmoteList(cfg.channel)
+            chat('Removed %s from the emote list'%(emote))
+
+        elif(cfg.COMMAND_REGISTERUNIQUE == messageTok[0] and username == 'bigsmcgee'):
+            emote = messageTok[1]
+            Commands.RegisterChannelEmote(cfg.channel, emote)
+            emotes.RefreshEmoteList(cfg.channel)
+            chat('Added %s to the emote list for %ss channel'%(emote, cfg.channel))
+
+        elif(cfg.COMMAND_UNREGISTERUNIQUE== messageTok[0] and username == 'bigsmcgee'):
+            emote = messageTok[1]
+            Commands.UnregisterChannelEmote(cfg.channel, emote)
+            emotes.RefreshEmoteList(cfg.channel)
+            chat('Removed %s from the emote list for %ss channel'%(emote, cfg.channel))
+
         elif (cfg.COMMAND_MYWINS == messageTok[0]):
             mywins = Commands.GuessWins(username)
             chat("%s has guessed correctly %i times"%(username, mywins))

@@ -49,3 +49,15 @@ def TestTotalGuessWins():
 def TestUpdateUserGuessWins(username):
     DBInterface.UpdateUserWins(username)
     return GuessWins(username)
+
+def RegisterUniversalEmote(emote):
+    DBInterface.RegisterUniversalEmote(emote)
+
+def UnregisterUniversalEmote(emote):
+    DBInterface.UnregisterUniversalEmote(emote)
+
+def RegisterChannelEmote(channel, emote):
+    DBInterface.RegisterChannelEmote(channel, emote)
+
+def UnregisterChannelEmote(channel, emote):
+    DBInterface.UnregisterChannelEmote(channel, emote)

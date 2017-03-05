@@ -1,11 +1,11 @@
 # cfg.py
 ### CONFIG CLASS FOR THUNBOT ###
-
+channel = "etup"
 HOST = "irc.twitch.tv"  #twitch IRC server
 PORT = 6667
 NICK = "thunbot_" #name of the bot
 PASS = "oauth:zq951d4x3w1vdu9mzf8hc3a730ily1"#"oauth:xxi5yk7t1ul1q3wptdklgvrrdf4qls" #password to bot account
-CHAN = "#etup" #the channel you want to join
+CHAN = "#"+channel #the channel you want to join
 #RATE =  (20/30)         #chat spam limit
 
 THUNBEAST = "ThunBeast"
@@ -38,6 +38,10 @@ COMMAND_GUESSWINS = "!totalwins"
 #COMMAND_TESTWINS = "!testwins"
 #COMMAND_TESTUSERWINS = "!testuserwins"
 COMMAND_MYWINS = "!wins"
+COMMAND_REGISTER = "!register"
+COMMAND_UNREGISTER = "!unregister"
+COMMAND_REGISTERUNIQUE = "!channelregister"
+COMMAND_UNREGISTERUNIQUE = "!channelunregister"
 
 #MISC CONSTANTS
 GUESS_WINRATE = 5 #represents the max number of possible "retries" for the guess command

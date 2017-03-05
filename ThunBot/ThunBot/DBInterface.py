@@ -12,13 +12,13 @@ cnxn = pyodbc.connect('DRIVER='+driver+';PORT=1433;SERVER='+server+';PORT=1443;D
 cursor = cnxn.cursor()
 #username = "'bigs'"
 
-def _formatUsernameForQuery(username):
-    newUserName = "'"+username+"'"
-    return newUserName
+def _formatStringForQuery(string):
+    newString = "'"+string+"'"
+    return newString
 
 def GuessWinsQuery(username):
     '''Executes a query for the number of wins for the username passed. Returns an int containing the number of wins'''
-    username = _formatUsernameForQuery(username)
+    username = _formatStringForQuery(username)
     cursor.execute("""
                     select NumWins
                         from GuessWins
@@ -50,7 +50,7 @@ def UpdateTotalWins():
 
 def UpdateUserWins(username):
     '''Increments the personal win counter for a specified user if the user exists, if user doesnt exist it creates an entry with 1 win'''
-    username = _formatUsernameForQuery(username)
+    username = _formatStringForQuery(username)
     #cursor.execute("update GuessWins set NumWins=NumWins+1 where UserName={}".format(username))
     cursor.execute("""if not exists(select * from GuessWins where UserName = {}) 
                     BEGIN
@@ -64,6 +64,68 @@ def UpdateUserWins(username):
                     END                                                     """.format(username, username, username))
     cursor.commit()
 
-def GetEmoteList():
-    '''Reads the emotes table into memory'''
-    
+def GetEmoteList(emoteList):
+    '''Reads the emotes table into memory. returns a list object'''
+    cursor.execute("""select * from EmoteList""")
+    rows = cursor.fetchall()
+    for row in rows:
+        emoteList.append(row.emote)
+    return emoteList
+
+def GetChannelSpecificEmotes(emoteList, channel):
+    '''Appends channel specific emotes to the active emote list'''
+    channel = _formatStringForQuery(channel)
+    cursor.execute("""select * from UniqueEmoteList where channel = {}""".format(channel))
+    rows = cursor.fetchall()
+    for row in rows:
+        emoteList.append(row.emote)
+    return emoteList
+
+def RegisterUniversalEmote(emote):
+    '''Adds a universal emote to the emote DB. Inputs are the emote to be added'''
+    emote = _formatStringForQuery(emote)
+    cursor.execute("""
+                    if not exists(select * from EmoteList where emote = {})
+                    BEGIN
+                        insert into EmoteList(emote) values({})
+                    END
+                    """.format(emote, emote))
+    cursor.commit()
+
+def RegisterChannelEmote(channel, emote):
+    '''Added channel specific emote to the DB. Inputs are the emote to be added and the name of the channel'''
+    emote = _formatStringForQuery(emote)
+    channel = _formatStringForQuery(channel)
+    cursor.execute("""
+                    if not exists(select * from UniqueEmoteList where emote = {} and channel = {})
+                    BEGIN
+                        insert into UniqueEmoteList(channel, emote) values({}, {})
+                    END
+                    """.format(emote, channel, channel, emote))
+    cursor.commit()
+
+def UnregisterUniversalEmote(emote):
+    '''Removes a universal emote from the DB. Inputs are the emote to tbe removed'''
+    emote = _formatStringForQuery(emote)
+    cursor.execute("""
+                    if exists(select * from EmoteList where emote = {})
+                    BEGIN
+                        delete from EmoteList
+                            where emote = {}
+                    END
+                    """.format(emote, emote))
+    cursor.commit()
+
+
+def UnregisterChannelEmote(channel, emote):
+    '''Remove channel specific emote from the DB. Inputs are the emote to be removed along with the channel name'''
+    emote = _formatStringForQuery(emote)
+    channel = _formatStringForQuery(channel)
+    cursor.execute("""
+                    if exists(select * from UniqueEmoteList where emote = {} and channel = {})
+                    BEGIN
+                        delete from UniqueEmoteList
+                            where (channel = {} and emote = {})
+                    END
+                    """.format(emote, channel, channel, emote))
+    cursor.commit()
