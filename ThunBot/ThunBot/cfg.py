@@ -9,7 +9,7 @@ CHAN = "#"+channel #the channel you want to join
 #RATE =  (20/30)         #chat spam limit
 
 THUNBEAST = "ThunBeast"
-BOTNAME = ["ThunBot_", "ThunBot_,"] #make sure both version of this exist since twitch autocomplete puts a comma at the end of the name
+BOTNAME = ["ThunBot_", "ThunBot_,", "@ThunBot_,", "@ThunBot_"] #make sure both version of this exist since twitch autocomplete puts a comma at the end of the name
 
 #EMOTESLIST FILEPATH
 FILEPATH = "D:\\git\\ThunBot\\ThunBot\\ThunBot\\"

@@ -99,7 +99,7 @@ while True:
             guessTimer = time.time()
             continue
 
-        elif ((cfg.BOTNAME[0] in messageTok) or (cfg.BOTNAME[1] in messageTok)) and (time.time() - replyTimer >= cfg.REPLY_COOLDOWN):
+        elif ((cfg.BOTNAME[0] in messageTok) or (cfg.BOTNAME[1] in messageTok) or (cfg.BOTNAME[2] in messageTok) or (cfg.BOTNAME[3] in messageTok)) and (time.time() - replyTimer >= cfg.REPLY_COOLDOWN):
             chat(username + " " + ThunBeast)
             replyTimer = time.time()
         
