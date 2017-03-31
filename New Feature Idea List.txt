@@ -1,3 +1,0 @@
--Database for each channel to store various information.
-	-This would allow me to register channel specific emotes (such as !register gachiGASM) and it would add gachiGASM to the database for that channel
-	-store the amount of times each user has won(guessed correctly)

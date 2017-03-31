@@ -1,6 +1,6 @@
 # cfg.py
 ### CONFIG CLASS FOR THUNBOT ###
-channel = "etup"        #must keep this string separate from CHAN since this is also used for SQL
+channel = "bigsmcgee"        #must keep this string separate from CHAN since this is also used for SQL
 HOST = "irc.twitch.tv"  #twitch IRC server
 PORT = 6667
 NICK = "thunbot_" #name of the bot
@@ -19,10 +19,10 @@ fileName = FILEPATH+EMOTE_LIST
 GUESSFILE = "D:\git\ThunBot\ThunBot\ThunBot\GuessWins.txt"
 
 #COOLDOWNS
-REPLY_COOLDOWN = 5      #IN SECONDS
-PYRAMID_COOLDOWN = 60   #IN SECONDS
+REPLY_COOLDOWN = 5      # IN SECONDS
+PYRAMID_COOLDOWN = 60   # IN SECONDS
 GUESS_COOLDOWN = 15
-IGNORE_COOLDOWN = 30 #SECONDS
+IGNORE_COOLDOWN = 30 # SECONDS
 MYWINS_COOLDOWN = 5
 TOTALWINS_COOLDOWN = 5
 
@@ -31,13 +31,14 @@ TOTALWINS_COOLDOWN = 5
 COMMAND_PYRAMID = "!pyramid"
 COMMAND_GUESS   = "!guess"
 COMMAND_TEST    = "!test"
-COMMAND_THINKING = "!hmmm"  #requested by fake bade
+COMMAND_THINKING = "!hmmm"  # requested by fake bade
 COMMAND_GUESSWINS = "!totalwins"
-COMMAND_MYWINS = "!wins"
-COMMAND_REGISTER = "!register"
-COMMAND_UNREGISTER = "!unregister"
-COMMAND_REGISTERUNIQUE = "!channelregister"
-COMMAND_UNREGISTERUNIQUE = "!channelunregister"
+COMMAND_MYWINS = '!wins'
+COMMAND_REGISTER = "!reg"
+COMMAND_UNREGISTER = "!unreg"
+COMMAND_REGISTERUNIQUE = "!channelreg"
+COMMAND_UNREGISTERUNIQUE = "!channelunreg"
+COMMAND_RETARD = "!retard"
 
 #MISC CONSTANTS
 GUESS_WINRATE = 5 #represents the max number of possible "retries" for the guess command

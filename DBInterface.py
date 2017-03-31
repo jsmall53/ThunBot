@@ -29,7 +29,7 @@ def GuessWinsQuery(username):
     try:
         numWins = rows.NumWins
     except:
-        numWins = 0 #otherwise they probably arent in the database
+        numWins = 0 # otherwise they probably arent in the database
 
     return int(numWins)
     
@@ -52,7 +52,7 @@ def UpdateTotalWins():
 def UpdateUserWins(username):
     '''Increments the personal win counter for a specified user if the user exists, if user doesnt exist it creates an entry with 1 win'''
     username = _formatStringForQuery(username)
-    #cursor.execute("update GuessWins set NumWins=NumWins+1 where UserName={}".format(username))
+    # cursor.execute("update GuessWins set NumWins=NumWins+1 where UserName={}".format(username))
     cursor.execute("""if not exists(select * from GuessWins where UserName = {}) 
                     BEGIN
                         insert into GuessWins(UserName, NumWins) VALUES({}, 1)
@@ -65,6 +65,7 @@ def UpdateUserWins(username):
                     END                                                     """.format(username, username, username))
     cursor.commit()
 
+
 def GetEmoteList(emoteList):
     '''Reads the emotes table into memory. returns a list object'''
     cursor.execute("""select * from EmoteList""")
@@ -72,6 +73,7 @@ def GetEmoteList(emoteList):
     for row in rows:
         emoteList.append(row.emote)
     return emoteList
+
 
 def GetChannelSpecificEmotes(emoteList, channel):
     '''Appends channel specific emotes to the active emote list'''
@@ -81,6 +83,7 @@ def GetChannelSpecificEmotes(emoteList, channel):
     for row in rows:
         emoteList.append(row.emote)
     return emoteList
+
 
 def RegisterUniversalEmote(emote):
     '''Adds a universal emote to the emote DB. Inputs are the emote to be added'''
@@ -93,6 +96,7 @@ def RegisterUniversalEmote(emote):
                     """.format(emote, emote))
     cursor.commit()
 
+
 def RegisterChannelEmote(channel, emote):
     '''Added channel specific emote to the DB. Inputs are the emote to be added and the name of the channel'''
     emote = _formatStringForQuery(emote)
@@ -104,6 +108,7 @@ def RegisterChannelEmote(channel, emote):
                     END
                     """.format(emote, channel, channel, emote))
     cursor.commit()
+
 
 def UnregisterUniversalEmote(emote):
     '''Removes a universal emote from the DB. Inputs are the emote to tbe removed'''
