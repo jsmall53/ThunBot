@@ -1,6 +1,9 @@
 # cfg.py
 ### CONFIG CLASS FOR THUNBOT ###
-channel = "bigsmcgee"        #must keep this string separate from CHAN since this is also used for SQL
+
+##TODO: Extract some configs out to a file that it loaded in at runtime. mainly for the channel so that I dont have to recompile everytime I want to enter a different channel
+
+channel = "etup"        #must keep this string separate from CHAN since this is also used for SQL
 HOST = "irc.twitch.tv"  #twitch IRC server
 PORT = 6667
 NICK = "thunbot_" #name of the bot
@@ -11,9 +14,9 @@ THUNBEAST = "ThunBeast"
 BOTNAME = ["ThunBot_", "ThunBot_,", "@ThunBot_,", "@ThunBot_"] #make sure both version of this exist since twitch autocomplete puts a comma at the end of the name
 
 #EMOTESLIST FILEPATH
-FILEPATH = "D:\\git\\ThunBot\\ThunBot\\ThunBot\\"
-EMOTE_LIST = r"EmoteList.txt"
-fileName = FILEPATH+EMOTE_LIST
+#FILEPATH = "D:\\git\\ThunBot\\ThunBot\\ThunBot\\"
+#EMOTE_LIST = r"EmoteList.txt"
+#fileName = FILEPATH+EMOTE_LIST
 
 #GUESS WINS FILEPATH
 GUESSFILE = "D:\git\ThunBot\ThunBot\ThunBot\GuessWins.txt"
@@ -38,10 +41,11 @@ COMMAND_REGISTER = "!reg"
 COMMAND_UNREGISTER = "!unreg"
 COMMAND_REGISTERUNIQUE = "!channelreg"
 COMMAND_UNREGISTERUNIQUE = "!channelunreg"
-COMMAND_RETARD = "!retard"
+COMMAND_REFRESH = "!refresh"
 
 #MISC CONSTANTS
-GUESS_WINRATE = 5 #represents the max number of possible "retries" for the guess command
+GUESS_WINRATE = 3 #represents the max number of possible "retries" for the guess command
 
 GLOBAL_EMOTE_URL = "https://twitchemotes.com/api_cache/v2/global.json"
 BTTV_EMOTE_URL = "https://api.betterttv.net/2/emotes"
+CHAN_EMOTE_URL = "https://api.betterttv.net/2/channels/"  # to use this, make sure you append the channel name to the end of the string

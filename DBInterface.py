@@ -88,9 +88,10 @@ def GetBTTVEmoteList(emoteList):
     return emoteList
 
 
-def GetChannelSpecificEmotes(emoteList, channel):
+def GetChannelSpecificEmotes(emoteList, channel, format = False):
     '''Appends channel specific emotes to the active emote list'''
-    channel = _formatStringForQuery(channel)
+    if format:
+        channel = _formatStringForQuery(channel)
     cursor.execute("""select * from UniqueEmoteList where channel = ?""", channel)
     rows = cursor.fetchall()
     for row in rows:
@@ -115,7 +116,7 @@ def RegisterChannelEmote(channel, emote, format = False):
     '''Added channel specific emote to the DB. Inputs are the emote to be added and the name of the channel'''
     if format:
         emote = _formatStringForQuery(emote)
-    channel = _formatStringForQuery(channel)
+        channel = _formatStringForQuery(channel)
     cursor.execute("""
                     if not exists(select * from UniqueEmoteList where emote = ? and channel = ?)
                     BEGIN
@@ -143,7 +144,7 @@ def UnregisterChannelEmote(channel, emote, format = False):
     '''Remove channel specific emote from the DB. Inputs are the emote to be removed along with the channel name'''
     if format:
         emote = _formatStringForQuery(emote)
-    channel = _formatStringForQuery(channel)
+        channel = _formatStringForQuery(channel)
     cursor.execute("""
                     if exists(select * from UniqueEmoteList where emote = ? and channel = ?)
                     BEGIN

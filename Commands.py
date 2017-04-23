@@ -6,7 +6,10 @@ import DBInterface
 import EmoteManager
 
 random.seed()
-#first is the guess command, since this is the most popular it seems
+
+#  first is the guess command, since this is the most popular it seems
+
+
 def ThunGuess(username, emote, emotesRef):
     '''Takes in an emote as a string and returns an emote string'''
     for i in range(1, cfg.GUESS_WINRATE):
@@ -71,6 +74,11 @@ def UpdateGlobalEmotes(managerRef):
 def UpdateBTTVEmotes(managerRef):
     managerRef.ManageBTTVEmotes()
 
-def UpdateAllEmotes(managerRef):
+def UpdateChannelEmotes(managerRef, channel):
+    managerRef.ManageChannelEmotes(channel)
+
+def UpdateAllEmotes(managerRef, channel):
+    '''Updates the Database with emotes from the available API's'''
     UpdateGlobalEmotes(managerRef)
     UpdateBTTVEmotes(managerRef)
+    UpdateChannelEmotes(managerRef, channel)

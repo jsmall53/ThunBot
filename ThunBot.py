@@ -53,8 +53,8 @@ s.send("JOIN {}\r\n".format(cfg.CHAN).encode("utf-8"))
 
 chat(ThunBeast + " /")
 
+Commands.UpdateAllEmotes(emoteManager, cfg.channel)  # make sure we have the latest emotes
 emotes.Init(cfg.channel)
-Commands.UpdateAllEmotes(emoteManager)
 
 # main loop
 while True:
@@ -80,7 +80,7 @@ while True:
 
         if cfg.COMMAND_GUESS == messageTok[0] and (time.time() - guessTimer >= cfg.GUESS_COOLDOWN):
             try:
-                guessedEmote = messageTok[1] # need to not hard code this positioning
+                guessedEmote = messageTok[1]  # need to not hard code this positioning
             except:
                 guessedEmote = ""
                 continue
@@ -91,20 +91,15 @@ while True:
                     chat(username + ' is correct! I guessed ' + guessedEmote)
                 else:
                     chat(username + ' is wrong. My guess was ' + winningEmote)
+                guessTimer = time.time()
             else:
                 chat(messageTok[1] + ' is not a recognized emote')
-            guessTimer = time.time()
             continue
 
         elif ((cfg.BOTNAME[0] in messageTok) or (cfg.BOTNAME[1] in messageTok) or (cfg.BOTNAME[2] in messageTok) or (cfg.BOTNAME[3] in messageTok)) and (time.time() - replyTimer >= cfg.REPLY_COOLDOWN):
             chat(username + " " + ThunBeast)
             replyTimer = time.time()
 
-        elif (cfg.COMMAND_RETARD == messageTok[0]):
-            retard = messageTok[1]
-            chat(retard + " is a retard!")
-        
-        
         elif cfg.COMMAND_GUESSWINS == messageTok[0]:
             totalGuessWins = Commands.TotalGuessWins()
             chat('There has been %i correct guesses!' %(totalGuessWins))
@@ -150,8 +145,8 @@ while True:
             chat(ThunBeast)
             pyramidTimer = time.time()
 
-        elif cfg.COMMAND_TEST == messageTok[0]:
-            Commands.UpdateAllEmotes(emoteManager)
+        elif cfg.COMMAND_REFRESH == messageTok[0]:
+            Commands.UpdateAllEmotes(emoteManager, cfg.channel)
             emotes.RefreshEmoteList(cfg.channel)
 
         #MAKE SURE THIS IS AT THE END OF THE SEQUENCE   
