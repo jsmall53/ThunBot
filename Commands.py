@@ -3,6 +3,7 @@ from Emotes import Emotes
 import cfg
 import random
 import DBInterface
+import EmoteManager
 
 random.seed()
 #first is the guess command, since this is the most popular it seems
@@ -63,3 +64,13 @@ def RegisterChannelEmote(channel, emote):
 
 def UnregisterChannelEmote(channel, emote):
     DBInterface.UnregisterChannelEmote(channel, emote)
+
+def UpdateGlobalEmotes(managerRef):
+    managerRef.ManageGlobalEmotes()
+
+def UpdateBTTVEmotes(managerRef):
+    managerRef.ManageBTTVEmotes()
+
+def UpdateAllEmotes(managerRef):
+    UpdateGlobalEmotes(managerRef)
+    UpdateBTTVEmotes(managerRef)

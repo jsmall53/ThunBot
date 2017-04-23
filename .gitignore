@@ -4,3 +4,4 @@ __pycache__/Commands.cpython-35.pyc
 __pycache__/DBInterface.cpython-35.pyc
 __pycache__/Emotes.cpython-35.pyc
 __pycache__/cfg.cpython-35.pyc
+*.pyc

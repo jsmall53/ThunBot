@@ -6,6 +6,7 @@ import time
 import re
 from Emotes import Emotes
 import Commands
+from EmoteManager import EmoteManager
 
 CHAT_MSG = re.compile(r"^:\w+!\w+@\w+\.tmi\.twitch\.tv PRIVMSG #\w+ :")
 
@@ -25,6 +26,7 @@ isUserIgnored = False
 
 # instantiate our emote class
 emotes = Emotes()
+emoteManager = EmoteManager()
 
 # MACROS
 def chat(msg):
@@ -52,6 +54,7 @@ s.send("JOIN {}\r\n".format(cfg.CHAN).encode("utf-8"))
 chat(ThunBeast + " /")
 
 emotes.Init(cfg.channel)
+Commands.UpdateAllEmotes(emoteManager)
 
 # main loop
 while True:
@@ -147,6 +150,9 @@ while True:
             chat(ThunBeast)
             pyramidTimer = time.time()
 
+        elif cfg.COMMAND_TEST == messageTok[0]:
+            Commands.UpdateAllEmotes(emoteManager)
+            emotes.RefreshEmoteList(cfg.channel)
 
         #MAKE SURE THIS IS AT THE END OF THE SEQUENCE   
         elif cfg.THUNBEAST in messageTok and time.time() - replyTimer >= cfg.REPLY_COOLDOWN:

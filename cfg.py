@@ -42,3 +42,6 @@ COMMAND_RETARD = "!retard"
 
 #MISC CONSTANTS
 GUESS_WINRATE = 5 #represents the max number of possible "retries" for the guess command
+
+GLOBAL_EMOTE_URL = "https://twitchemotes.com/api_cache/v2/global.json"
+BTTV_EMOTE_URL = "https://api.betterttv.net/2/emotes"
