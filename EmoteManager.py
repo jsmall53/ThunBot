@@ -34,7 +34,8 @@ class EmoteManager:
         bttvDicts = bttv_data['emotes']
         bttvEmotes = []
         for element in bttvDicts:
-            bttvEmotes.append(element['code'])
+            if element['channel'] is None:
+                bttvEmotes.append(element['code'])
         return bttvEmotes
 
     def ManageBTTVEmotes(self):
